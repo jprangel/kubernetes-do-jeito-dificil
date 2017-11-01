@@ -35,7 +35,7 @@ gcloud compute networks subnets create kubernetes \
 
 ### Regras de Firewall
 
-Create a firewall rule that allows internal communication across all protocols:
+Crie uma regra de firewall que permita comunicação interna entre todos os protocolos:
 
 ```
 gcloud compute firewall-rules create kubernetes-the-hard-way-allow-internal \
@@ -44,7 +44,7 @@ gcloud compute firewall-rules create kubernetes-the-hard-way-allow-internal \
   --source-ranges 10.240.0.0/24,10.200.0.0/16
 ```
 
-Create a firewall rule that allows external SSH, ICMP, and HTTPS:
+Crie uma regra de firewall que permita SSH, ICMP e HTTPS externos:
 
 ```
 gcloud compute firewall-rules create kubernetes-the-hard-way-allow-external \
@@ -53,15 +53,16 @@ gcloud compute firewall-rules create kubernetes-the-hard-way-allow-external \
   --source-ranges 0.0.0.0/0
 ```
 
-> An [external load balancer](https://cloud.google.com/compute/docs/load-balancing/network/) will be used to expose the Kubernetes API Servers to remote clients.
 
-List the firewall rules in the `kubernetes-the-hard-way` VPC network:
+> Um [balanceador de carga externo](https://cloud.google.com/compute/docs/load-balancing/network/) será utilizado para expôr os Servidores de API do Kubernetes para clientes remotos.
+
+Liste as regras de firewall na rede VPC `kubernetes-the-hard-way`:
 
 ```
 gcloud compute firewall-rules list --filter "network: kubernetes-the-hard-way"
 ```
 
-> output
+> saída
 
 ```
 NAME                                         NETWORK                  DIRECTION  PRIORITY  ALLOW                 DENY
@@ -71,20 +72,20 @@ kubernetes-the-hard-way-allow-internal       kubernetes-the-hard-way  INGRESS   
 
 ### Endereço de IP Público do Kubernetes
 
-Allocate a static IP address that will be attached to the external load balancer fronting the Kubernetes API Servers:
+Aloque um endereço de IP estático que será vinculado ao balanceador de carga externo que fará face aos Servidores de API do Kubernetes:
 
 ```
 gcloud compute addresses create kubernetes-the-hard-way \
   --region $(gcloud config get-value compute/region)
 ```
 
-Verify the `kubernetes-the-hard-way` static IP address was created in your default compute region:
+Verifique se um endereço estático de IP do `kubernetes-the-hard-way` foi criado na sua zona computacional padrão:
 
 ```
 gcloud compute addresses list --filter="name=('kubernetes-the-hard-way')"
 ```
 
-> output
+> saída
 
 ```
 NAME                     REGION    ADDRESS        STATUS
@@ -93,11 +94,11 @@ kubernetes-the-hard-way  us-west1  XX.XXX.XXX.XX  RESERVED
 
 ## Instâncias Computacionais
 
-The compute instances in this lab will be provisioned using [Ubuntu Server](https://www.ubuntu.com/server) 16.04, which has good support for the [cri-containerd container runtime](https://github.com/kubernetes-incubator/cri-containerd). Each compute instance will be provisioned with a fixed private IP address to simplify the Kubernetes bootstrapping process.
+As instâncias computacionais nesse lab serão provisionadas utilizando o [Ubuntu Server](https://www.ubuntu.com/server) 16.04, que tem um bom suporte para o [_runtime_ de contêiner cri-containerd](https://github.com/kubernetes-incubator/cri-containerd). Cada instância computacional será provisionada com um endereço de IP fixo para simplificar o processo de colocar no ar o Kubernetes.
 
 ### Controladores do Kubernetes
 
-Create three compute instances which will host the Kubernetes control plane:
+Crie três instâncias computacionais que hospedarão a nave de controle do Kubernetes:
 
 ```
 for i in 0 1 2; do
@@ -115,13 +116,13 @@ for i in 0 1 2; do
 done
 ```
 
-### Kubernetes Workers
+### Kubernetes _Workers_
 
-Each worker instance requires a pod subnet allocation from the Kubernetes cluster CIDR range. The pod subnet allocation will be used to configure container networking in a later exercise. The `pod-cidr` instance metadata will be used to expose pod subnet allocations to compute instances at runtime.
+Cada instância de _worker_ requer uma alocação de sub-rede de _pod_ da faixa CIDR do cluster Kubernetes. A alocação de sub-rede do _pod_ será utilizada para configurar a rede dos contêineres num exercício posterior. Os metadados da instância `pod-cidr` serão utilizados para expor as alocações de sub-rede de _pod_ para instâncias computacionais em tempo de execução.
 
-> The Kubernetes cluster CIDR range is defined by the Controller Manager's `--cluster-cidr` flag. In this tutorial the cluster CIDR range will be set to `10.200.0.0/16`, which supports 254 subnets.
+> A faixa de CIDR do cluster Kubernetes é definida pela flag `--cluster-cidr`  do Gerenciador da Controladora. Nesse tutorial a faixa de CIDR será definida como `10.200.0.0/16`, que suporta 254 sub-redes.
 
-Create three compute instances which will host the Kubernetes worker nodes:
+Crie três instâncias computacionais que hospedarão os nós de _worker_ do Kubernetes:
 
 ```
 for i in 0 1 2; do
