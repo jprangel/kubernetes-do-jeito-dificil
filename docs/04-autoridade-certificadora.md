@@ -253,7 +253,7 @@ cfssl gencert \
   kubernetes-csr.json | cfssljson -bare kubernetes
 ```
 
-Results:
+Resultados:
 
 ```
 kubernetes-key.pem

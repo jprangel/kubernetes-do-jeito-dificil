@@ -32,7 +32,7 @@ Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platfo
 * _PENDENTE_[Gerando Arquivos de Configuração do Kubernetes para autenticação](docs/05-kubernetes-configuration-files.md)
 * _PENDENTE_[Gerando a Configuração de Encriptação de Dados e a Chave](docs/06-data-encryption-keys.md)
 * [Subindo o Cluster etcd](docs/07-subindo-etcd.md)
-* _PENDENTE_[Subindo o Mestre do Kubernetes (ou Control Plane)](docs/08-bootstrapping-kubernetes-controllers.md)
+* [Subindo o Plano de Controle](docs/08-subindo-controladoras-kubernetes.md)
 * _PENDENTE_[Subindo os Nós Worker do Kubernetes](docs/09-bootstrapping-kubernetes-workers.md)
 * [Configurando o kubectl para Acesso Remoto](docs/10-configurando-kubectl.md)
 * [Provisionando Rotas de Rede dos Pods](docs/11-rotas-de-rede-de-pod.md)

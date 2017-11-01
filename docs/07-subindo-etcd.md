@@ -125,4 +125,4 @@ f98dc20bce6225a0, started, controller-0, https://10.240.0.10:2380, https://10.24
 ffed16798470cab5, started, controller-1, https://10.240.0.11:2380, https://10.240.0.11:2379
 ```
 
-Próximo: [Subindo a Nave de Controle do Kubernetes](08-subindo-controladoras-kubernetes.md)
+Próximo: [Subindo o Plano de Controle do Kubernetes](08-subindo-controladoras-kubernetes.md)

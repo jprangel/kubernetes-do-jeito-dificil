@@ -1,4 +1,4 @@
-# Provisionando Rotas de Rede de Pod
+# Provisionando Rotas de Rede do Pod
 
 Pods agendados para um nó recebem um endereço de IP da faixa de CIDR do Nó do Pod em questão. A essa altura, Pods não podem se comunicar com outros Pods em execução em nós diferentes devido a [routes](https://cloud.google.com/compute/docs/vpc/routes) de rede faltantes.
 
