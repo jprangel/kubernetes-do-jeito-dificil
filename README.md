@@ -10,7 +10,7 @@ Kubernetes do Jeito Difícil está otimizado para o aprendizado, significando to
 
 ## Público Alvo
 
-O público alvo para esse tutorial é alguem planejando suportar um cluster de Kubernetes em produção e quer entender como tudo se encaixa.
+O público alvo para esse tutorial é alguém planejando suportar um cluster de Kubernetes em produção e querendo entender como tudo se encaixa.
 
 ## Detalhes do Cluster
 
