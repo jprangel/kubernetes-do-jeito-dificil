@@ -4,7 +4,7 @@ Nesse lab você irá instalar os utilitários de linha de comando necessários p
 
 ## Instale o CFSSL
 
-Os utitilários de linha de comando `cfssl` e `cfssljson` serão utilizados para provisionar uma [Infraestrutura PKI (Infraestrutura de Chave Pública)](https://en.wikipedia.org/wiki/Public_key_infrastructure) e gerar certificados TLS.
+Os utilitários de linha de comando `cfssl` e `cfssljson` serão utilizados para provisionar uma [Infraestrutura PKI (Infraestrutura de Chave Pública)](https://en.wikipedia.org/wiki/Public_key_infrastructure) e gerar certificados TLS.
 
 Faça o download e instale o `cfssl` e `cfssljson` a partir do [repositório cfssl](https://pkg.cfssl.org):
 

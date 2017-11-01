@@ -1,28 +1,29 @@
-# Provisioning Compute Resources
+# Provisionando Recursos Computacionais
 
-Kubernetes requires a set of machines to host the Kubernetes control plane and the worker nodes where containers are ultimately run. In this lab you will provision the compute resources required for running a secure and highly available Kubernetes cluster across a single [compute zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones).
+O Kubernetes requer um conjunto de máquinas para hospedar o nave de comando e os nós _worker_ onde os contêineres são efetivamente executados. Nesse lab você provisionará os recursos computacionais necessários para executar um cluster Kubernetes seguro e altamente disponível por uma única [zona computacional](https://cloud.google.com/compute/docs/regions-zones/regions-zones).
 
-> Ensure a default compute zone and region have been set as described in the [Prerequisites](01-prerequisites.md#set-a-default-compute-region-and-zone) lab.
+> Garanta que uma zona computacional e região padrões foram definidas como descrito no lab [Pré-requisitos](01-pre-requisitos.md####defina-uma- -zona-computacional-e-região-padrões).
 
-## Networking
+## Rede
 
-The Kubernetes [networking model](https://kubernetes.io/docs/concepts/cluster-administration/networking/#kubernetes-model) assumes a flat network in which containers and nodes can communicate with each other. In cases where this is not desired [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can limit how groups of containers are allowed to communicate with each other and external network endpoints.
+O [modelo de rede](https://kubernetes.io/docs/concepts/cluster-administration/networking/#kubernetes-model)  do Kubernetes assume uma rede plana na qual contêineres e nós podem comunicar-se. Em casos onde isso não é desejado [políticas de rede](https://kubernetes.io/docs/concepts/services-networking/network-policies/) podem limitar como grupos de contêineres são autorizados a comunicar entre si e com _endpoints_ de rede externos.
 
-> Setting up network policies is out of scope for this tutorial.
+> Configurar políticas de rede está fora do escopo desse tutorial.
 
-### Virtual Private Cloud Network
+### Rede de Nuvem Privada Virtual
 
-In this section a dedicated [Virtual Private Cloud](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) (VPC) network will be setup to host the Kubernetes cluster.
+Nessa seção uma rede de [Nuvem Privada Virtual](https://cloud.google.com/compute/docs/networks-and-firewalls#networks) (VPC) será configurada para hospedar o cluster do Kubernetes.
 
-Create the `kubernetes-the-hard-way` custom VPC network:
+Crie a rede VPC customizada `kubernetes-the-hard-way`:
 
 ```
 gcloud compute networks create kubernetes-the-hard-way --mode custom
 ```
 
-A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) must be provisioned with an IP address range large enough to assign a private IP address to each node in the Kubernetes cluster.
 
-Create the `kubernetes` subnet in the `kubernetes-the-hard-way` VPC network:
+Uma [sub-rede](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) deve ser provisionada dentro de uma faixa de IP grande o suficiente para atribuir um endereço de IP privado para cada nó no cluster do Kubernetes.
+
+Crie a sub-rede `kubernetes` na rede VPC `kubernetes-the-hard-way`:
 
 ```
 gcloud compute networks subnets create kubernetes \
@@ -30,9 +31,9 @@ gcloud compute networks subnets create kubernetes \
   --range 10.240.0.0/24
 ```
 
-> The `10.240.0.0/24` IP address range can host up to 254 compute instances.
+> O faixa de endereço de IP `10.240.0.0/24`  pode hospedar até 254 instâncias computacionais
 
-### Firewall Rules
+### Regras de Firewall
 
 Create a firewall rule that allows internal communication across all protocols:
 
@@ -68,7 +69,7 @@ kubernetes-the-hard-way-allow-external       kubernetes-the-hard-way  INGRESS   
 kubernetes-the-hard-way-allow-internal       kubernetes-the-hard-way  INGRESS    1000      tcp,udp,icmp
 ```
 
-### Kubernetes Public IP Address
+### Endereço de IP Público do Kubernetes
 
 Allocate a static IP address that will be attached to the external load balancer fronting the Kubernetes API Servers:
 
@@ -90,11 +91,11 @@ NAME                     REGION    ADDRESS        STATUS
 kubernetes-the-hard-way  us-west1  XX.XXX.XXX.XX  RESERVED
 ```
 
-## Compute Instances
+## Instâncias Computacionais
 
 The compute instances in this lab will be provisioned using [Ubuntu Server](https://www.ubuntu.com/server) 16.04, which has good support for the [cri-containerd container runtime](https://github.com/kubernetes-incubator/cri-containerd). Each compute instance will be provisioned with a fixed private IP address to simplify the Kubernetes bootstrapping process.
 
-### Kubernetes Controllers
+### Controladores do Kubernetes
 
 Create three compute instances which will host the Kubernetes control plane:
 
@@ -139,15 +140,15 @@ for i in 0 1 2; do
 done
 ```
 
-### Verification
+### Verificação
 
-List the compute instances in your default compute zone:
+Liste as instâncias computacionais na sua zona computacional padrão:
 
 ```
 gcloud compute instances list
 ```
 
-> output
+> saída
 
 ```
 NAME          ZONE        MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
@@ -159,4 +160,4 @@ worker-1      us-west1-c  n1-standard-1               10.240.0.21  XX.XXX.XX.XXX
 worker-2      us-west1-c  n1-standard-1               10.240.0.22  XXX.XXX.XX.XX   RUNNING
 ```
 
-Next: [Provisioning a CA and Generating TLS Certificates](04-certificate-authority.md)
+Próximo: [Provisionando a CA e Gerando Certificados TLS](04-autoridade-certificadora.md)
