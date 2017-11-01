@@ -1,14 +1,14 @@
-# Configuring kubectl for Remote Access
+# Configurando o kubectl para Acesso Remoto
 
-In this lab you will generate a kubeconfig file for the `kubectl` command line utility based on the `admin` user credentials.
+Nesse lab vorê irá gerar um arquivo kubeconfig para o utilitário de linha de comando `kubectl` baseado nas credenciais `admin` de usuário.
 
-> Run the commands in this lab from the same directory used to generate the admin client certificates.
+> Execute os comandos nesse lab a partir do mesmo diretório utilizado para gerar os certificados admin dos clientes.
 
-## The Admin Kubernetes Configuration File
+## O Arquivo de Configuração Admin do Kubernetes
 
-Each kubeconfig requires a Kubernetes API Server to connect to. To support high availability the IP address assigned to the external load balancer fronting the Kubernetes API Servers will be used.
+Cada kubeconfig requer um Servidor de API do Kubernetes para se conectar. Para suportar alta disponibilidade, o endereço de IP atribuído ao balanceador de carga externo fazendo face aos Servidores de API do Kubernetes será utilizado.
 
-Retrieve the `kubernetes-the-hard-way` static IP address:
+Recupere o endereço de IP estático do `kubernetes-the-hard-way`:
 
 ```
 KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
@@ -16,7 +16,7 @@ KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-har
   --format 'value(address)')
 ```
 
-Generate a kubeconfig file suitable for authenticating as the `admin` user:
+Crie um arquivo kubeconfig apto para autenticar como o usuário `admin`:
 
 ```
 kubectl config set-cluster kubernetes-the-hard-way \
@@ -41,15 +41,15 @@ kubectl config set-context kubernetes-the-hard-way \
 kubectl config use-context kubernetes-the-hard-way
 ```
 
-## Verification
+## Verificação
 
-Check the health of the remote Kubernetes cluster:
+Valide a saúde do cluster remoto do Kubernetes:
 
 ```
 kubectl get componentstatuses
 ```
 
-> output
+> saída
 
 ```
 NAME                 STATUS    MESSAGE              ERROR
@@ -60,13 +60,13 @@ etcd-0               Healthy   {"health": "true"}
 etcd-1               Healthy   {"health": "true"}
 ```
 
-List the nodes in the remote Kubernetes cluster:
+Liste os nós no cluster remoto do Kubernetes:
 
 ```
 kubectl get nodes
 ```
 
-> output
+> saída
 
 ```
 NAME       STATUS    ROLES     AGE       VERSION
@@ -75,4 +75,4 @@ worker-1   Ready     <none>    2m        v1.8.0
 worker-2   Ready     <none>    2m        v1.8.0
 ```
 
-Next: [Provisioning Pod Network Routes](11-pod-network-routes.md)
+Próximo: [Provisionando Rotas de Rede do Pod](11-rotas-rede-pod.md)
