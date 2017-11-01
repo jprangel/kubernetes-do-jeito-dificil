@@ -1,47 +1,47 @@
-# Prerequisites
+# Pré-requisitos
 
 ## Google Cloud Platform
 
-This tutorial leverages the [Google Cloud Platform](https://cloud.google.com/) to streamline provisioning of the compute infrastructure required to bootstrap a Kubernetes cluster from the ground up. [Sign up](https://cloud.google.com/free/) for $300 in free credits.
+Esse tutorial explora o [Google Cloud Platform](https://cloud.google.com/) simplificar o provisionameto da arquitetura de computação necessária para subir um cluster de Kubernetes do zero. [Inscreva-se em] (https://cloud.google.com/free/) para $300 (dólares) em créditos.
 
-[Estimated cost](https://cloud.google.com/products/calculator/#id=78df6ced-9c50-48f8-a670-bc5003f2ddaa) to run this tutorial: $0.22 per hour ($5.39 per day).
+[Custo estimado](https://cloud.google.com/products/calculator/#id=78df6ced-9c50-48f8-a670-bc5003f2ddaa) para executar esse tutorial: $0.22 (dólares) por hora ($5.39 (dólares) por dia).
 
-> The compute resources required for this tutorial exceed the Google Cloud Platform free tier.
+> Os recursos computacionais para esse tutorial excedem o nível gratuito do Google Cloud Platform.
 
-## Google Cloud Platform SDK
+## SDK do Google Cloud Platform
 
-### Install the Google Cloud SDK
+### Instale a SDK do Google Cloud 
 
-Follow the Google Cloud SDK [documentation](https://cloud.google.com/sdk/) to install and configure the `gcloud` command line utility.
+Siga a [documentação](https://cloud.google.com/sdk/)(em Inglês) do SDK do Google Cloud para instalar e configurar o utilitário de linha de comando `gcloud`.
 
-Verify the Google Cloud SDK version is 173.0.0 or higher:
+Verifique que a versão do SDK do Google Cloud  é 173.0.0 ou superior:
 
 ```
 gcloud version
 ```
 
-### Set a Default Compute Region and Zone
+### Defina uma Zona de Computação e Região Padrões
 
-This tutorial assumes a default compute region and zone have been configured.
+Esse tutorial assume que uma zona de computação e uma região tenham sido configuradas.
 
-If you are using the `gcloud` command-line tool for the first time `init` is the easiest way to do this:
+Se você está utilizando a ferramenta de linha de comando `gcloud` pela primeira vez, `init` é a maneira mais fácil de fazer isso:
 
 ```
 gcloud init
 ```
 
-Otherwise set a default compute region:
+Ou então defina uma Região de Computação padrão:
 
 ```
 gcloud config set compute/region us-west1
 ```
 
-Set a default compute zone:
+Defina uma Zona de Computação padrão:
 
 ```
 gcloud config set compute/zone us-west1-c
 ```
 
-> Use the `gcloud compute zones list` command to view additional regions and zones.
+> Utilize o comando `gcloud compute zones list` para visualizar regiões e zonas adicionais.
 
-Next: [Installing the Client Tools](02-client-tools.md)
+Próximo: [Instalando as Ferramentas Cliente](02-client-tools.md)

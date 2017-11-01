@@ -1,39 +1,41 @@
-# Kubernetes The Hard Way
+ATENÇÃO: Essa é uma tradução livre, sem fins lucrativos, buscando apenas facilitar o acesso a material em Português sobre o Kubernetes diretamente de quem realmente entende do assunto. Mantive todas as referências e nomenclatura de arquivos em Inglês de forma a facilitar acompanhar toda e qualquer atualização na documentação original.
 
-This tutorial walks you through setting up Kubernetes the hard way. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Container Engine](https://cloud.google.com/container-engine), or the [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
+# Kubernetes no Modo Difícil
 
-Kubernetes The Hard Way is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
+Esse tutorial irá acompanhá-lo na configuração do Kubernetes no Modo Difícil. Esse guia não é para pessoas buscando um comando totalmente automatizado para colocar no ar um cluster de Kubernetes. Se você é um desses então confira [Google Container Engine](https://cloud.google.com/container-engine), ou então [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/) (em Inglês).
 
-> The results of this tutorial should not be viewed as production ready, and may receive limited support from the community, but don't let that stop you from learning!
+Kubernetes no Modo Difícil está otimizado para o aprendizado, significando tomar o caminho mais longo para garantir que você entenda cada tarefa necessária para colocar no ar um cluster de Kubernetes.
 
-## Target Audience
+> Os resultados desse tutorial não devem ser tidos como aptos à produção, e podem ter suporte limitado da comunidade, mas não deixe que isso o impeça de aprender!
 
-The target audience for this tutorial is someone planning to support a production Kubernetes cluster and wants to understand how everything fits together.
+## Público Alvo
 
-## Cluster Details
+O público alvo para esse tutorial é alguem planejando suportar um cluster de Kubernetes em produção e quer entender como tudo se encaixa.
 
-Kubernetes The Hard Way guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
+## Detalhes do Cluster
+
+O Kubernetes no Modo Difícil irá guiá-lo para colocar no ar um cluster Kubernetes de alta disponibilidade com encriptação fim-a-fim entre componentes e autenticação RBAC.
 
 * [Kubernetes](https://github.com/kubernetes/kubernetes) 1.8.0
 * [cri-containerd Container Runtime](https://github.com/kubernetes-incubator/cri-containerd) 1.0.0-alpha.0
 * [CNI Container Networking](https://github.com/containernetworking/cni) 0.6.0
 * [etcd](https://github.com/coreos/etcd) 3.2.8
 
-## Labs
+## Laboratórios
 
-This tutorial assumes you have access to the [Google Cloud Platform](https://cloud.google.com). While GCP is used for basic infrastructure requirements the lessons learned in this tutorial can be applied to other platforms.
+Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platform](https://cloud.google.com). Ainda que o GCP é utilizado para requisitos básicos de infraestrutura, as lições aprendidas nesse tutorial podem ser aplicadas a outras plataformas.
 
-* [Prerequisites](docs/01-prerequisites.md)
-* [Installing the Client Tools](docs/02-client-tools.md)
-* [Provisioning Compute Resources](docs/03-compute-resources.md)
-* [Provisioning the CA and Generating TLS Certificates](docs/04-certificate-authority.md)
-* [Generating Kubernetes Configuration Files for Authentication](docs/05-kubernetes-configuration-files.md)
-* [Generating the Data Encryption Config and Key](docs/06-data-encryption-keys.md)
-* [Bootstrapping the etcd Cluster](docs/07-bootstrapping-etcd.md)
-* [Bootstrapping the Kubernetes Control Plane](docs/08-bootstrapping-kubernetes-controllers.md)
-* [Bootstrapping the Kubernetes Worker Nodes](docs/09-bootstrapping-kubernetes-workers.md)
-* [Configuring kubectl for Remote Access](docs/10-configuring-kubectl.md)
-* [Provisioning Pod Network Routes](docs/11-pod-network-routes.md)
-* [Deploying the DNS Cluster Add-on](docs/12-dns-addon.md)
-* [Smoke Test](docs/13-smoke-test.md)
-* [Cleaning Up](docs/14-cleanup.md)
+* [Pré-requisitos](docs/01-prerequisites.md)
+* [Instalando as ferramentas Cliente](docs/02-client-tools.md)
+* [Provisionando Compute Resources](docs/03-compute-resources.md)
+* [Provisionando a CA e gerando certificados TLS](docs/04-certificate-authority.md)
+* [Gerando Arquivos de Configuração do Kubernetes para autenticação](docs/05-kubernetes-configuration-files.md)
+* [Gerando a Configuração de Encriptação de Dados e a Chave](docs/06-data-encryption-keys.md)
+* [Subindo o Cluster etcd](docs/07-bootstrapping-etcd.md)
+* [Subindo o Mestre do Kubernetes (ou Control Plane)](docs/08-bootstrapping-kubernetes-controllers.md)
+* [Subindo os Nós Worker do Kubernetes](docs/09-bootstrapping-kubernetes-workers.md)
+* [Configurando o kubectl para Acesso Remoto](docs/10-configuring-kubectl.md)
+* [Provisionando Rotas de Rede dos Pods](docs/11-pod-network-routes.md)
+* [Implantando o Add-on de DNS do Cluster](docs/12-dns-addon.md)
+* [Smoke Test (Teste de Fumaça)](docs/13-smoke-test.md)
+* [Organizando](docs/14-cleanup.md)
