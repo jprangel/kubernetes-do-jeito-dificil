@@ -1,27 +1,27 @@
-# Bootstrapping the etcd Cluster
+# Subindo o Cluster etcd
 
-Kubernetes components are stateless and store cluster state in [etcd](https://github.com/coreos/etcd). In this lab you will bootstrap a three node etcd cluster and configure it for high availability and secure remote access.
+Componentes do Kubernetes são _stateless_ (não mantém estado) e armazenam o estado do cluster no [etcd](https://github.com/coreos/etcd). Nesse lab você irá subir um cluster de etcd com três nós e configurá-lo para alta disponibilidade e acesso remoto seguro.
 
-## Prerequisites
+## Pré-requisitos
 
-The commands in this lab must be run on each controller instance: `controller-0`, `controller-1`, and `controller-2`. Login to each controller instance using the `gcloud` command. Example:
+Os comandos nesse lab devem ser executados em cada instância de controladora:  `controller-0`, `controller-1`, e `controller-2`. Conecte em cada controladora utilizando o comando `gcloud`. Exemplo:
 
 ```
 gcloud compute ssh controller-0
 ```
 
-## Bootstrapping an etcd Cluster Member
+## Subindo um Membro de Cluster etcd
 
-### Download and Install the etcd Binaries
+### Faça o Download e Instale os Binários do etcd
 
-Download the official etcd release binaries from the [coreos/etcd](https://github.com/coreos/etcd) GitHub project:
+Faça o Download dos binários oficiais do etcd a partir do projeto [coreos/etcd](https://github.com/coreos/etcd) no GitHub:
 
 ```
 wget -q --show-progress --https-only --timestamping \
   "https://github.com/coreos/etcd/releases/download/v3.2.8/etcd-v3.2.8-linux-amd64.tar.gz"
 ```
 
-Extract and install the `etcd` server and the `etcdctl` command line utility:
+Extraia e instale o servidor `etcd` e o utilitário de linha de comando `etcdctl`:
 
 ```
 tar -xvf etcd-v3.2.8-linux-amd64.tar.gz
@@ -31,7 +31,7 @@ tar -xvf etcd-v3.2.8-linux-amd64.tar.gz
 sudo mv etcd-v3.2.8-linux-amd64/etcd* /usr/local/bin/
 ```
 
-### Configure the etcd Server
+### Configure o Servidor etcd
 
 ```
 sudo mkdir -p /etc/etcd /var/lib/etcd
@@ -41,20 +41,20 @@ sudo mkdir -p /etc/etcd /var/lib/etcd
 sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
 ```
 
-The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Retrieve the internal IP address for the current compute instance:
+O IP interno da instância será utilizado para servir requisições de cliente e comunicar com cada um dos pares do cluster etcd. Recupere o endereço de IP interno para a instância computacional em uso:
 
 ```
 INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
 ```
 
-Each etcd member must have a unique name within an etcd cluster. Set the etcd name to match the hostname of the current compute instance:
+Cada membro etcd deve ter um nome único dentro de um cluster etcd. Configure o nome do etcd para bater com o _hostname_ a instância computacional corrente: 
 
 ```
 ETCD_NAME=$(hostname -s)
 ```
 
-Create the `etcd.service` systemd unit file:
+Crie o arquivo _unit_ `etcd.service` do systemd:
 
 ```
 cat > etcd.service <<EOF
@@ -89,7 +89,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### Start the etcd Server
+### Inicie o Servidor etcd
 
 ```
 sudo mv etcd.service /etc/systemd/system/
@@ -107,17 +107,17 @@ sudo systemctl enable etcd
 sudo systemctl start etcd
 ```
 
-> Remember to run the above commands on each controller node: `controller-0`, `controller-1`, and `controller-2`.
+> Lembre de executar os comandos acima em cada nó de controladora: `controller-0`, `controller-1`, e `controller-2`.
 
-## Verification
+## Verificação
 
-List the etcd cluster members:
+Liste os membros do cluster etcd:
 
 ```
 ETCDCTL_API=3 etcdctl member list
 ```
 
-> output
+> saída
 
 ```
 3a57933972cb5131, started, controller-2, https://10.240.0.12:2380, https://10.240.0.12:2379
@@ -125,4 +125,4 @@ f98dc20bce6225a0, started, controller-0, https://10.240.0.10:2380, https://10.24
 ffed16798470cab5, started, controller-1, https://10.240.0.11:2380, https://10.240.0.11:2379
 ```
 
-Next: [Bootstrapping the Kubernetes Control Plane](08-bootstrapping-kubernetes-controllers.md)
+Próximo: [Subindo a Nave de Controle do Kubernetes](08-subindo-controladoras-kubernetes.md)
