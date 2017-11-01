@@ -2,7 +2,7 @@
 
 O Kubernetes requer um conjunto de máquinas para hospedar o nave de comando e os nós _worker_ onde os contêineres são efetivamente executados. Nesse lab você provisionará os recursos computacionais necessários para executar um cluster Kubernetes seguro e altamente disponível por uma única [zona computacional](https://cloud.google.com/compute/docs/regions-zones/regions-zones).
 
-> Garanta que uma zona computacional e região padrões foram definidas como descrito no lab [Pré-requisitos](01-pre-requisitos.md#defina-uma- -zona-computacional-e-região-padrões).
+> Garanta que uma zona computacional e região padrões foram definidas como descrito no lab [Pré-requisitos](01-pre-requisitos.md#defina-uma-zona-computacional-e-região-padrões).
 
 ## Rede
 
