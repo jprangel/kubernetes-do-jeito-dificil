@@ -1,10 +1,10 @@
-# Cleaning Up
+# Limpeza
 
-In this labs you will delete the compute resources created during this tutorial.
+Nesse lab você irá deletar os recursos computacionais criados durante esse tutorial.
 
-## Compute Instances
+## Instâncias Computacionais
 
-Delete the controller and worker compute instances:
+Delete o controlador e a instância computacional dos _workers_:
 
 ```
 gcloud -q compute instances delete \
@@ -12,9 +12,9 @@ gcloud -q compute instances delete \
   worker-0 worker-1 worker-2
 ```
 
-## Networking
+## Rede
 
-Delete the external load balancer network resources:
+Remova os recursos de rede do balanceador de carga externo:
 
 ```
 gcloud -q compute forwarding-rules delete kubernetes-forwarding-rule \
@@ -25,13 +25,13 @@ gcloud -q compute forwarding-rules delete kubernetes-forwarding-rule \
 gcloud -q compute target-pools delete kubernetes-target-pool
 ```
 
-Delete the `kubernetes-the-hard-way` static IP address:
+Remova os endereço de IP estático `kubernetes-the-hard-way`:
 
 ```
 gcloud -q compute addresses delete kubernetes-the-hard-way
 ```
 
-Delete the `kubernetes-the-hard-way` firewall rules:
+Remova as regras de firewall `kubernetes-the-hard-way`:
 
 ```
 gcloud -q compute firewall-rules delete \
@@ -40,7 +40,7 @@ gcloud -q compute firewall-rules delete \
   kubernetes-the-hard-way-allow-external
 ```
 
-Delete the Pod network routes:
+Remova as rodas de rede de Pod:
 
 ```
 gcloud -q compute routes delete \
@@ -49,13 +49,13 @@ gcloud -q compute routes delete \
   kubernetes-route-10-200-2-0-24
 ```
 
-Delete the `kubernetes` subnet:
+Remova a sub-rede `kubernetes`:
 
 ```
 gcloud -q compute networks subnets delete kubernetes
 ```
 
-Delete the `kubernetes-the-hard-way` network VPC:
+Remova a rede VPC `kubernetes-the-hard-way`:
 
 ```
 gcloud -q compute networks delete kubernetes-the-hard-way

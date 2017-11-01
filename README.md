@@ -38,4 +38,4 @@ Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platfo
 * [Provisionando Rotas de Rede dos Pods](docs/11-pod-network-routes.md)
 * [Implantando o Add-on de DNS do Cluster](docs/12-dns-addon.md)
 * [Smoke Test (Teste de Fumaça)](docs/13-smoke-test.md)
-* [Organizando](docs/14-cleanup.md)
+* [Limpeza](docs/14-limpeza.md)
