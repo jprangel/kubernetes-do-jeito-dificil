@@ -34,7 +34,7 @@ Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platfo
 * [Subindo o Cluster etcd](docs/07-bootstrapping-etcd.md)
 * [Subindo o Mestre do Kubernetes (ou Control Plane)](docs/08-bootstrapping-kubernetes-controllers.md)
 * [Subindo os Nós Worker do Kubernetes](docs/09-bootstrapping-kubernetes-workers.md)
-* [Configurando o kubectl para Acesso Remoto](docs/10-configuring-kubectl.md)
+* [Configurando o kubectl para Acesso Remoto](docs/10-configurando-kubectl.md)
 * [Provisionando Rotas de Rede dos Pods](docs/11-rotas-de-rede-de-pod.md)
 * [Implantando o Add-on de DNS do Cluster](docs/12-dns-addon.md)
 * [Smoke Test (Teste de Fumaça)](docs/13-smoke-test.md)
