@@ -14,7 +14,7 @@ Esse tutorial explora o [Google Cloud Platform](https://cloud.google.com/) simpl
 
 Siga a [documentação](https://cloud.google.com/sdk/)(em Inglês) do SDK do Google Cloud para instalar e configurar o utilitário de linha de comando `gcloud`.
 
-Verifique que a versão do SDK do Google Cloud  é 173.0.0 ou superior:
+Verifique que a versão do SDK do Google Cloud é 173.0.0 ou superior:
 
 ```
 gcloud version
@@ -22,7 +22,7 @@ gcloud version
 
 ### Defina uma Zona Computacional e Região Padrões
 
-Esse tutorial assume que uma zona computacional e uma região tenham sido configuradas.
+Esse tutorial assume que uma zona e uma região computacional tenham sido configuradas.
 
 Se você está utilizando a ferramenta de linha de comando `gcloud` pela primeira vez, `init` é a maneira mais fácil de fazer isso:
 
@@ -30,7 +30,7 @@ Se você está utilizando a ferramenta de linha de comando `gcloud` pela primeir
 gcloud init
 ```
 
-Ou então defina uma Região Computacional padrão:
+Ou então, defina uma Região Computacional padrão:
 
 ```
 gcloud config set compute/region us-west1
@@ -44,4 +44,4 @@ gcloud config set compute/zone us-west1-c
 
 > Utilize o comando `gcloud compute zones list` para visualizar regiões e zonas adicionais.
 
-Próximo: [Instalando as Ferramentas Cliente](02-client-tools.md)
+Próximo: [Instalando as Ferramentas Cliente](02-ferramentas-cliente.md)

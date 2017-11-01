@@ -45,7 +45,7 @@ sudo mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
 
 ### Verificação
 
-Verifique que a versão do 1.2.0 ou superior do `cfssl` está instalada:
+Verifique que a versão 1.2.0 ou superior do `cfssl` está instalada:
 
 ```
 cfssl version
