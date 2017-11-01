@@ -1,26 +1,26 @@
-# Smoke Test
+# Smoke Test (Teste de Fumaça)
 
-In this lab you will complete a series of tasks to ensure your Kubernetes cluster is functioning correctly.
+Nesse lab você irá completar uma série de tarefas para garantir que seu cluster Kubernetes está funcionando corretamente.
 
-## Data Encryption
+## Encriptação de Dados
 
-In this section you will verify the ability to [encrypt secret data at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#verifying-that-data-is-encrypted).
+Nessa seção você irá verificar a habilidade de [encriptar dados secretos em repouso](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#verifying-that-data-is-encrypted).
 
-Create a generic secret:
+Crie um _secret_ (segredo) genérico:
 
 ```
 kubectl create secret generic kubernetes-the-hard-way \
   --from-literal="mykey=mydata"
 ```
 
-Print a hexdump of the `kubernetes-the-hard-way` secret stored in etcd:
+Imprima um hexdump da _secret_ `kubernetes-the-hard-way` armazenada no etcd:
 
 ```
 gcloud compute ssh controller-0 \
   --command "ETCDCTL_API=3 etcdctl get /registry/secrets/default/kubernetes-the-hard-way | hexdump -C"
 ```
 
-> output
+> saída
 
 ```
 00000000  2f 72 65 67 69 73 74 72  79 2f 73 65 63 72 65 74  |/registry/secret|
@@ -42,61 +42,61 @@ gcloud compute ssh controller-0 \
 000000fa
 ```
 
-The etcd key should be prefixed with `k8s:enc:aescbc:v1:key1`, which indicates the `aescbc` provider was used to encrypt the data with the `key1` encryption key.
+A chave etcd deveria estar prefixada com `k8s:enc:aescbc:v1:key1`, o que indica que o provedor `aescbc` foi utilizado para encriptar os dados com a chave de encriptação `key1`.
 
-## Deployments
+## Implantações
 
-In this section you will verify the ability to create and manage [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+Nessa seção você irá verificar a abilidade de criar e gerenciar [Implantações](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 
-Create a deployment for the [nginx](https://nginx.org/en/) web server:
+Crie uma implantação para o servidor web [nginx](https://nginx.org/en/):
 
 ```
 kubectl run nginx --image=nginx
 ```
 
-List the pod created by the `nginx` deployment:
+Liste os _pods_ criados pela implantação `nginx`:
 
 ```
 kubectl get pods -l run=nginx
 ```
 
-> output
+> saída
 
 ```
 NAME                     READY     STATUS    RESTARTS   AGE
 nginx-4217019353-b5gzn   1/1       Running   0          15s
 ```
 
-### Port Forwarding
+### Encaminhamento de Porta (_Forwarding_)
 
-In this section you will verify the ability to access applications remotely using [port forwarding](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
+Nessa seção você irá verificar a habilidade de acessar aplicações remotamente utilizando [encaminhamento de porta](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
 
-Retrieve the full name of the `nginx` pod:
+Recupere o nome completo do pod `nginx`:
 
 ```
 POD_NAME=$(kubectl get pods -l run=nginx -o jsonpath="{.items[0].metadata.name}")
 ```
 
-Forward port `8080` on your local machine to port `80` of the `nginx` pod:
+Encaminhe a porta `8080` na sua máquina local para a porta `80` do pod do `nginx`:
 
 ```
 kubectl port-forward $POD_NAME 8080:80
 ```
 
-> output
+> saída
 
 ```
 Forwarding from 127.0.0.1:8080 -> 80
 Forwarding from [::1]:8080 -> 80
 ```
 
-In a new terminal make an HTTP request using the forwarding address:
+Em um novo terminal, faça uma solicitação HTTP utilizando o endereço de encaminhamento:
 
 ```
 curl --head http://127.0.0.1:8080
 ```
 
-> output
+> saída
 
 ```
 HTTP/1.1 200 OK
@@ -110,7 +110,7 @@ ETag: "5989d7cc-264"
 Accept-Ranges: bytes
 ```
 
-Switch back to the previous terminal and stop the port forwarding to the `nginx` pod:
+Retorne ao terminal anterior e pare o encaminhamento de porta para o pod `nginx`:
 
 ```
 Forwarding from 127.0.0.1:8080 -> 80
@@ -121,56 +121,56 @@ Handling connection for 8080
 
 ### Logs
 
-In this section you will verify the ability to [retrieve container logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/).
+Nessa seção você irá verificar a abilitade de [recuperar logs de contêineres](https://kubernetes.io/docs/concepts/cluster-administration/logging/).
 
-Print the `nginx` pod logs:
+Imprima os logs do pod `nginx`:
 
 ```
 kubectl logs $POD_NAME
 ```
 
-> output
+> saída
 
 ```
 127.0.0.1 - - [02/Oct/2017:01:04:20 +0000] "HEAD / HTTP/1.1" 200 0 "-" "curl/7.54.0" "-"
 ```
 
-### Exec
+### Executar
 
-In this section you will verify the ability to [execute commands in a container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/#running-individual-commands-in-a-container).
+Nessa seção você irá verificar a habilidade de [executar comandos em um contêiner](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/#running-individual-commands-in-a-container).
 
-Print the nginx version by executing the `nginx -v` command in the `nginx` container:
+Imprima a versão do nginx executando o comando `nginx -v` no contêiner `nginx`:
 
 ```
 kubectl exec -ti $POD_NAME -- nginx -v
 ```
 
-> output
+> saída
 
 ```
 nginx version: nginx/1.13.5
 ```
 
-## Services
+## Serviços
 
-In this section you will verify the ability to expose applications using a [Service](https://kubernetes.io/docs/concepts/services-networking/service/).
+Nessa seção você irá verificar a habilidade de expôr aplicações utilizando um [Serviço](https://kubernetes.io/docs/concepts/services-networking/service/).
 
-Expose the `nginx` deployment using a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport) service:
+Exponha a implantação `nginx` utilizando um serviço de [NodePort (Porta de Nó)](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport):
 
 ```
 kubectl expose deployment nginx --port 80 --type NodePort
 ```
 
-> The LoadBalancer service type can not be used because your cluster is not configured with [cloud provider integration](https://kubernetes.io/docs/getting-started-guides/scratch/#cloud-provider). Setting up cloud provider integration is out of scope for this tutorial.
+> O tipo de serviço Balanceador de Carga não pode ser utilizado porque seu cluster não está configurado com [integração de provedor de nuvem](https://kubernetes.io/docs/getting-started-guides/scratch/#cloud-provider). Configurar uma integração de provedor de nuvem está fora do escopo desse tutorial.
 
-Retrieve the node port assigned to the `nginx` service:
+Recupere a porta do nó atribuída ao serviço do `nginx`:
 
 ```
 NODE_PORT=$(kubectl get svc nginx \
   --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 ```
 
-Create a firewall rule that allows remote access to the `nginx` node port:
+Crie uma regra de firewall que permita acesso remoto à porta de nó do `nginx`:
 
 ```
 gcloud compute firewall-rules create kubernetes-the-hard-way-allow-nginx-service \
@@ -178,20 +178,20 @@ gcloud compute firewall-rules create kubernetes-the-hard-way-allow-nginx-service
   --network kubernetes-the-hard-way
 ```
 
-Retrieve the external IP address of a worker instance:
+Recupere o endereço de IP externo de uma instância _worker_:
 
 ```
 EXTERNAL_IP=$(gcloud compute instances describe worker-0 \
   --format 'value(networkInterfaces[0].accessConfigs[0].natIP)')
 ```
 
-Make an HTTP request using the external IP address and the `nginx` node port:
+Faça uma requisição HTTP utilizando o endereço de IP externo e a porta de nó do `nginx`:
 
 ```
 curl -I http://${EXTERNAL_IP}:${NODE_PORT}
 ```
 
-> output
+> saída
 
 ```
 HTTP/1.1 200 OK
@@ -205,4 +205,4 @@ ETag: "5989d7cc-264"
 Accept-Ranges: bytes
 ```
 
-Next: [Cleaning Up](14-cleanup.md)
+Próximo: [Limpeza](14-limpeza.md)
