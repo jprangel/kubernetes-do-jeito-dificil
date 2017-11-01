@@ -1,20 +1,20 @@
-# Generating the Data Encryption Config and Key
+# Gerando a Configuração e a Chave de Encriptação de Dados
 
-Kubernetes stores a variety of data including cluster state, application configurations, and secrets. Kubernetes supports the ability to [encrypt](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data) cluster data at rest.
+O Kubernetes armazena uma variedade de dados incluindo estado do cluster, configurações de aplicação e segredos. O Kubernetes suporta a habilidade de [encriptar](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data) dados em repouso no cluster.
 
-In this lab you will generate an encryption key and an [encryption config](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#understanding-the-encryption-at-rest-configuration) suitable for encrypting Kubernetes Secrets.
+Nesse lab você irá criar uma chave de encriptação e uma [configuração de encriptação](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#understanding-the-encryption-at-rest-configuration) adequada para encriptar Segredos do Kubernetes. 
 
-## The Encryption Key
+## A chave de Encriptação
 
-Generate an encryption key:
+Crie uma chave de encriptação:
 
 ```
 ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 ```
 
-## The Encryption Config File
+## O Arquivo de Configuração de Encriptação
 
-Create the `encryption-config.yaml` encryption config file:
+Crie o arquivo de encriptação `encryption-config.yaml`:
 
 ```
 cat > encryption-config.yaml <<EOF
@@ -32,7 +32,7 @@ resources:
 EOF
 ```
 
-Copy the `encryption-config.yaml` encryption config file to each controller instance:
+Copie o arquivo de encriptação `encryption-config.yaml` para cada instância de controladora:
 
 ```
 for instance in controller-0 controller-1 controller-2; do
@@ -40,4 +40,4 @@ for instance in controller-0 controller-1 controller-2; do
 done
 ```
 
-Next: [Bootstrapping the etcd Cluster](07-bootstrapping-etcd.md)
+Próximo: [Subindo o Cluster etcd](07-subindo-etcd.md)

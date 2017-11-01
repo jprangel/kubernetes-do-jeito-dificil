@@ -98,4 +98,4 @@ for instance in worker-0 worker-1 worker-2; do
 done
 ```
 
-Próximo: [Gerando a Configuração e a Chave de Encriptação de Dados](06-data-encryption-keys.md)
+Próximo: [Gerando a Configuração e a Chave de Encriptação de Dados](06-chaves-encriptacao-dados.md)
