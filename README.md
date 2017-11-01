@@ -26,8 +26,8 @@ O Kubernetes no Modo Difícil irá guiá-lo para colocar no ar um cluster Kubern
 Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platform](https://cloud.google.com). Ainda que o GCP é utilizado para requisitos básicos de infraestrutura, as lições aprendidas nesse tutorial podem ser aplicadas a outras plataformas.
 
 * [Pré-requisitos](docs/01-pre-requisitos.md)
-* [Instalando as Ferramentas Cliente](docs/02-client-tools.md)
-* [Provisionando Recursos Computacionais](docs/03-compute-resources.md)
+* [Instalando as Ferramentas Cliente](docs/02-ferramentas-cliente.md)
+* [Provisionando Recursos Computacionais](docs/03-recursos-computacionais.md)
 * [Provisionando a CA e Gerando Certificados TLS](docs/04-certificate-authority.md)
 * [Gerando Arquivos de Configuração do Kubernetes para autenticação](docs/05-kubernetes-configuration-files.md)
 * [Gerando a Configuração de Encriptação de Dados e a Chave](docs/06-data-encryption-keys.md)

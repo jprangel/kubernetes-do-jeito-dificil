@@ -1,13 +1,12 @@
-# Installing the Client Tools
+# Instalando as Ferramentas Cliente
 
-In this lab you will install the command line utilities required to complete this tutorial: [cfssl](https://github.com/cloudflare/cfssl), [cfssljson](https://github.com/cloudflare/cfssl), and [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
+Nesse lab você irá instalar os utilitários de linha de comando necessários para completar esse tutorial: [cfssl](https://github.com/cloudflare/cfssl), [cfssljson](https://github.com/cloudflare/cfssl), e [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
 
+## Instale o CFSSL
 
-## Install CFSSL
+Os utitilários de linha de comando `cfssl` e `cfssljson` serão utilizados para provisionar uma [Infraestrutura PKI (Infraestrutura de Chave Pública)](https://en.wikipedia.org/wiki/Public_key_infrastructure) e gerar certificados TLS.
 
-The `cfssl` and `cfssljson` command line utilities will be used to provision a [PKI Infrastructure](https://en.wikipedia.org/wiki/Public_key_infrastructure) and generate TLS certificates.
-
-Download and install `cfssl` and `cfssljson` from the [cfssl repository](https://pkg.cfssl.org):
+Faça o download e instale o `cfssl` e `cfssljson` a partir do [repositório cfssl](https://pkg.cfssl.org):
 
 ### OS X
 
@@ -44,15 +43,15 @@ sudo mv cfssl_linux-amd64 /usr/local/bin/cfssl
 sudo mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
 ```
 
-### Verification
+### Verificação
 
-Verify `cfssl` version 1.2.0 or higher is installed:
+Verifique que a versão do 1.2.0 ou superior do `cfssl` está instalada:
 
 ```
 cfssl version
 ```
 
-> output
+> saída
 
 ```
 Version: 1.2.0
@@ -60,11 +59,11 @@ Revision: dev
 Runtime: go1.6
 ```
 
-> The cfssljson command line utility does not provide a way to print its version.
+> O utilitário de linha de comando cfssljson não provê uma maneira de imprimir sua versão.
 
-## Install kubectl
+## Instale o kubectl
 
-The `kubectl` command line utility is used to interact with the Kubernetes API Server. Download and install `kubectl` from the official release binaries:
+O utilitário de linha de comando `kubectl` é utilizado para interagir com o Servidor de API do Kubernetes. Faça o download e instale o `kubectl` a partir dos binários oficiais:
 
 ### OS X
 
@@ -94,18 +93,18 @@ chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 ```
 
-### Verification
+### Verificação
 
-Verify `kubectl` version 1.8.0 or higher is installed:
+Verifique que a versão 1.8.0 ou superior do  `kubectl` está instalada:
 
 ```
 kubectl version --client
 ```
 
-> output
+> saída
 
 ```
 Client Version: version.Info{Major:"1", Minor:"8", GitVersion:"v1.8.0", GitCommit:"6e937839ac04a38cac63e6a7a306c5d035fe7b0a", GitTreeState:"clean", BuildDate:"2017-09-28T22:57:57Z", GoVersion:"go1.8.3", Compiler:"gc", Platform:"darwin/amd64"}
 ```
 
-Next: [Provisioning Compute Resources](03-compute-resources.md)
+Próximo: [Provisionando Recursos Computacionais](03-recursos-computacionais.md)
