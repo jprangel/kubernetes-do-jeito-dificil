@@ -1,26 +1,26 @@
-# Bootstrapping the Kubernetes Worker Nodes
+# Subindo os Nós Worker do Kubernetes
 
-In this lab you will bootstrap three Kubernetes worker nodes. The following components will be installed on each node: [runc](https://github.com/opencontainers/runc), [container networking plugins](https://github.com/containernetworking/cni), [cri-containerd](https://github.com/kubernetes-incubator/cri-containerd), [kubelet](https://kubernetes.io/docs/admin/kubelet), and [kube-proxy](https://kubernetes.io/docs/concepts/cluster-administration/proxies).
+Nesse lab você irá subir três nós _worker_ do Kubernetes. Os seguintes componentes serão instalados em cada nó:[runc](https://github.com/opencontainers/runc), [plugins de rede para contêiner](https://github.com/containernetworking/cni), [cri-containerd](https://github.com/kubernetes-incubator/cri-containerd), [kubelet](https://kubernetes.io/docs/admin/kubelet) e [kube-proxy](https://kubernetes.io/docs/concepts/cluster-administration/proxies).
 
-## Prerequisites
+## Pré-requisitos
 
-The commands in this lab must be run on each worker instance: `worker-0`, `worker-1`, and `worker-2`. Login to each worker instance using the `gcloud` command. Example:
+Os comandos nesse lab devem ser executados em cada instância de controladora:  `controller-0`, `controller-1`, e `controller-2`. Conecte em cada controladora utilizando o comando `gcloud`. Exemplo:
 
 ```
 gcloud compute ssh worker-0
 ```
 
-## Provisioning a Kubernetes Worker Node
+## Provisionando um Nó _Worker_ do Kubernetes
 
-Install the OS dependencies:
+Instale as dependências de SO:
 
 ```
 sudo apt-get -y install socat
 ```
 
-> The socat binary enables support for the `kubectl port-forward` command.
+> O binário socat habilita o suporte ao comando `kubectl port-forward`.
 
-### Download and Install Worker Binaries
+### Faça o Download e Instale os Binários do _Worker_
 
 ```
 wget -q --show-progress --https-only --timestamping \
@@ -31,7 +31,7 @@ wget -q --show-progress --https-only --timestamping \
   https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubelet
 ```
 
-Create the installation directories:
+Crie os diretórios de instalação:
 
 ```
 sudo mkdir -p \
@@ -43,7 +43,7 @@ sudo mkdir -p \
   /var/run/kubernetes
 ```
 
-Install the worker binaries:
+Instale os binários do _worker_:
 
 ```
 sudo tar -xvf cni-plugins-amd64-v0.6.0.tgz -C /opt/cni/bin/
@@ -61,16 +61,16 @@ chmod +x kubectl kube-proxy kubelet
 sudo mv kubectl kube-proxy kubelet /usr/local/bin/
 ```
 
-### Configure CNI Networking
+### Configure a rede CNI
 
-Retrieve the Pod CIDR range for the current compute instance:
+Recupere a faixa CIDR do Pod para a instância computacional corrente:
 
 ```
 POD_CIDR=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/attributes/pod-cidr)
 ```
 
-Create the `bridge` network configuration file:
+Crie o arquivo de configuração de rede `bridge`:
 
 ```
 cat > 10-bridge.conf <<EOF
@@ -92,7 +92,7 @@ cat > 10-bridge.conf <<EOF
 EOF
 ```
 
-Create the `loopback` network configuration file:
+Crie o arquivo de configuração de rede `loopback`:
 
 ```
 cat > 99-loopback.conf <<EOF
@@ -103,13 +103,13 @@ cat > 99-loopback.conf <<EOF
 EOF
 ```
 
-Move the network configuration files to the CNI configuration directory:
+Mova os arquivos de configuração para o diretório de configuração do CNI:
 
 ```
 sudo mv 10-bridge.conf 99-loopback.conf /etc/cni/net.d/
 ```
 
-### Configure the Kubelet
+### Configure o Kubelet
 
 ```
 sudo mv ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
@@ -123,7 +123,7 @@ sudo mv ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
 sudo mv ca.pem /var/lib/kubernetes/
 ```
 
-Create the `kubelet.service` systemd unit file:
+Crie o arquivo _unit_ `kubelet.service` do systemd:
 
 ```
 cat > kubelet.service <<EOF
@@ -161,13 +161,13 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### Configure the Kubernetes Proxy
+### Configure o Proxy do Kubernetes
 
 ```
 sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 ```
 
-Create the `kube-proxy.service` systemd unit file:
+Crie o arquivo _unit_ `kube-proxy.service` do systemd:
 
 ```
 cat > kube-proxy.service <<EOF
@@ -189,7 +189,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-### Start the Worker Services
+### Inicie os Serviços do _Worker_
 
 ```
 sudo mv kubelet.service kube-proxy.service /etc/systemd/system/
@@ -207,23 +207,23 @@ sudo systemctl enable containerd cri-containerd kubelet kube-proxy
 sudo systemctl start containerd cri-containerd kubelet kube-proxy
 ```
 
-> Remember to run the above commands on each worker node: `worker-0`, `worker-1`, and `worker-2`.
+> Lembre-se de executar os comandos acima em cada um dos nós de _worker_: `worker-0`, `worker-1` e `worker-2`.
 
-## Verification
+## Verificação
 
-Login to one of the controller nodes:
+Conecte em um dos nós de controladora:
 
 ```
 gcloud compute ssh controller-0
 ```
 
-List the registered Kubernetes nodes:
+Liste os nós de Kubernetes registrados:
 
 ```
 kubectl get nodes
 ```
 
-> output
+> saída
 
 ```
 NAME       STATUS    ROLES     AGE       VERSION

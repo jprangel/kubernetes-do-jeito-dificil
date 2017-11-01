@@ -1,12 +1,12 @@
-# Provisioning a CA and Generating TLS Certificates
+# Provisionando a CA e Gerando Certificados TLS
 
-In this lab you will provision a [PKI Infrastructure](https://en.wikipedia.org/wiki/Public_key_infrastructure) using CloudFlare's PKI toolkit, [cfssl](https://github.com/cloudflare/cfssl), then use it to bootstrap a Certificate Authority, and generate TLS certificates for the following components: etcd, kube-apiserver, kubelet, and kube-proxy.
+Nesse lab você irá provisionar uma [Infraestrutura PKI (Infraestrutura de Chave Privada)](https://en.wikipedia.org/wiki/Public_key_infrastructure) utilizando o toolkit da CloudFare, [cfssl](https://github.com/cloudflare/cfssl) e então utilizá-la para subir uma Autoridade Certificadora e gerar certificados TLS para os seguintes componentes: etcd, kube-apiserver, kubelet e kube-proxy.
 
-## Certificate Authority
+## Autoridade Certificadora
 
-In this section you will provision a Certificate Authority that can be used to generate additional TLS certificates.
+Nessa seção você irá provisionar uma Autoridade Certificadora que pode ser utilizada para gerar certificados TLS adicionais.
 
-Create the CA configuration file:
+Crie o arquivo de configuração da CA:
 
 ```
 cat > ca-config.json <<EOF
@@ -26,7 +26,7 @@ cat > ca-config.json <<EOF
 EOF
 ```
 
-Create the CA certificate signing request:
+Crie a requisição de assinatura do certificado da CA:
 
 ```
 cat > ca-csr.json <<EOF
@@ -49,26 +49,27 @@ cat > ca-csr.json <<EOF
 EOF
 ```
 
-Generate the CA certificate and private key:
+Gere o certificado da CA e a chave privada:
 
 ```
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 ```
 
-Results:
+Resultados:
 
 ```
 ca-key.pem
 ca.pem
 ```
 
-## Client and Server Certificates
+## Certificados de Cliente e Servidor
 
-In this section you will generate client and server certificates for each Kubernetes component and a client certificate for the Kubernetes `admin` user.
+Nessa seção você irá gerar os certificados de cliente e servidor para cada um dos componentes do Kubernetes e um certificado de cliente para o usuário `admin` do Kubernetes.
 
-### The Admin Client Certificate
 
-Create the `admin` client certificate signing request:
+### O Certificado de Cliente do Admin
+
+Crie a requisição de assinatura do certificado de cliente do `admin`:
 
 ```
 cat > admin-csr.json <<EOF
@@ -91,7 +92,7 @@ cat > admin-csr.json <<EOF
 EOF
 ```
 
-Generate the `admin` client certificate and private key:
+Gere o certificado de cliente e a chave privada do `admin`: 
 
 ```
 cfssl gencert \
@@ -102,18 +103,18 @@ cfssl gencert \
   admin-csr.json | cfssljson -bare admin
 ```
 
-Results:
+Resultados:
 
 ```
 admin-key.pem
 admin.pem
 ```
 
-### The Kubelet Client Certificates
+### Os Certificados de Cliente do Kubelet
 
-Kubernetes uses a [special-purpose authorization mode](https://kubernetes.io/docs/admin/authorization/node/) called Node Authorizer, that specifically authorizes API requests made by [Kubelets](https://kubernetes.io/docs/concepts/overview/components/#kubelet). In order to be authorized by the Node Authorizer, Kubelets must use a credential that identifies them as being in the `system:nodes` group, with a username of `system:node:<nodeName>`. In this section you will create a certificate for each Kubernetes worker node that meets the Node Authorizer requirements.
+Kubernetes utiliza um [modo de autorização de "propósito especial"] (https://kubernetes.io/docs/admin/authorization/node/) chamado _Node Authorizer_ (Autorizador de Nó), que autoriza especificamente requisições de API feitas pelo [Kubelets](https://kubernetes.io/docs/concepts/overview/components/#kubelet). Para ser autorizado pelo Autorizador de Nó, os Kubelets deve utilizar uma credencial que os identifiquem como parte do grupo `system:nodes`, com um usuário parte de `system:node:<nomeDoNó>`. Nessa seção você irá criar um certificado para cada _worker_ do Kubernetes que atende aos requisitos do Autorizador de Nós.
 
-Generate a certificate and private key for each Kubernetes worker node:
+Gere um certificado e uma chave privada para cada nó _worker_ do Kubernetes:
 
 ```
 for instance in worker-0 worker-1 worker-2; do
@@ -152,7 +153,7 @@ cfssl gencert \
 done
 ```
 
-Results:
+Resultados:
 
 ```
 worker-0-key.pem
@@ -163,9 +164,9 @@ worker-2-key.pem
 worker-2.pem
 ```
 
-### The kube-proxy Client Certificate
+### O Certificado de Cliente do kube-proxy
 
-Create the `kube-proxy` client certificate signing request:
+Crie a requisição de assinatura do certificado de cliente `kube-proxy`:
 
 ```
 cat > kube-proxy-csr.json <<EOF
@@ -188,7 +189,7 @@ cat > kube-proxy-csr.json <<EOF
 EOF
 ```
 
-Generate the `kube-proxy` client certificate and private key:
+Gere o certificado de cliente e a chave privada do `kube-proxy`:
 
 ```
 cfssl gencert \
@@ -199,18 +200,18 @@ cfssl gencert \
   kube-proxy-csr.json | cfssljson -bare kube-proxy
 ```
 
-Results:
+Resultados:
 
 ```
 kube-proxy-key.pem
 kube-proxy.pem
 ```
 
-### The Kubernetes API Server Certificate
+### Os Certificados dos Servidores de API Kubernetes
 
-The `kubernetes-the-hard-way` static IP address will be included in the list of subject alternative names for the Kubernetes API Server certificate. This will ensure the certificate can be validated by remote clients.
+O endereço estático de IP do `kubernetes-the-hard-way` será incluído na lista de nomes de sujeitos alternativos para o certificado do Servidor de API do Kubernetes. Isso irá garantir que o certificado possa ser validado por clientes remotos.
 
-Retrieve the `kubernetes-the-hard-way` static IP address:
+Recupere o endereço de IP estático do `kubernetes-the-hard-way`:
 
 ```
 KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
@@ -218,7 +219,7 @@ KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-har
   --format 'value(address)')
 ```
 
-Create the Kubernetes API Server certificate signing request:
+Crie a requisição de assinatura do certificado do Servidor de API do Kubernetes:
 
 ```
 cat > kubernetes-csr.json <<EOF
@@ -241,7 +242,7 @@ cat > kubernetes-csr.json <<EOF
 EOF
 ```
 
-Generate the Kubernetes API Server certificate and private key:
+Gere o certificado e a chave privada do Servidor de API do Kubernetes:
 
 ```
 cfssl gencert \
@@ -260,9 +261,9 @@ kubernetes-key.pem
 kubernetes.pem
 ```
 
-## Distribute the Client and Server Certificates
+## Distribua os Certificados de Cliente e Servidor
 
-Copy the appropriate certificates and private keys to each worker instance:
+Copie os certificados e chaves privadas apropriadas para cada instância de _worker_:
 
 ```
 for instance in worker-0 worker-1 worker-2; do
@@ -270,7 +271,7 @@ for instance in worker-0 worker-1 worker-2; do
 done
 ```
 
-Copy the appropriate certificates and private keys to each controller instance:
+Copie os certificados e chaves privadas apropriadas para cada instância de controladora:
 
 ```
 for instance in controller-0 controller-1 controller-2; do
@@ -278,6 +279,6 @@ for instance in controller-0 controller-1 controller-2; do
 done
 ```
 
-> The `kube-proxy` and `kubelet` client certificates will be used to generate client authentication configuration files in the next lab.
+> Os certificados de cliente do `kube-proxy` e do `kubelet` serão utilizados para gerar arquivos de configuração para autenticação de clientes no próximo lab.
 
-Next: [Generating Kubernetes Configuration Files for Authentication](05-kubernetes-configuration-files.md)
+Próximo: [Gerando Arquivos de Configuração do Kubernetes para Autenticação](05-arquivos-configuracao-kubernetes.md)
