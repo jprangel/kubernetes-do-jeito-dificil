@@ -30,7 +30,7 @@ Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platfo
 * [Provisionando Recursos Computacionais](docs/03-recursos-computacionais.md)
 * _Em progresso_ [Provisionando a CA e Gerando Certificados TLS](docs/04-autoridade-certificadora.md)
 * [Gerando Arquivos de Configuração do Kubernetes para Autenticação](docs/05-arquivos-configuracao-kubernetes.md)
-* _Em progresso_ [Gerando a Configuração e a Chave de Encriptação de Dados](docs/06-chaves-encriptacao-dados.md)
+* [Gerando a Configuração e a Chave de Encriptação de Dados](docs/06-chaves-encriptacao-dados.md)
 * [Subindo o Cluster etcd](docs/07-subindo-etcd.md)
 * [Subindo o Plano de Controle](docs/08-subindo-controladoras-kubernetes.md)
 * _Em progresso_ [Subindo os Nós Worker do Kubernetes](docs/09-subindo-workers-kubernetes.md)
