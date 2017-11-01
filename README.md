@@ -23,7 +23,7 @@ O Kubernetes do Jeito Difícil irá guiá-lo para colocar no ar um cluster Kuber
 
 ## Laboratórios
 
-Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platform](https://cloud.google.com). Ainda que o GCP é utilizado para requisitos básicos de infraestrutura, as lições aprendidas nesse tutorial podem ser aplicadas a outras plataformas.
+Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platform (GCP)](https://cloud.google.com). Apesar do  GCP ser utilizado para requisitos básicos de infraestrutura, as lições aprendidas nesse tutorial podem ser aplicadas em outras plataformas.
 
 * [Pré-requisitos](docs/01-pre-requisitos.md)
 * [Instalando as Ferramentas Cliente](docs/02-ferramentas-cliente.md)
