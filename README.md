@@ -1,4 +1,4 @@
-ATENÇÃO: Essa é uma tradução livre, sem fins lucrativos, buscando apenas facilitar o acesso a material em Português sobre o Kubernetes diretamente de quem realmente entende do assunto. Mantive todas as referências e nomenclatura de arquivos em Inglês de forma a facilitar acompanhar toda e qualquer atualização na documentação original.
+ATENÇÃO: Essa é uma tradução livre, sem fins lucrativos, buscando apenas facilitar o acesso a material em Português sobre o Kubernetes diretamente de quem realmente entende do assunto.
 
 # Kubernetes no Modo Difícil
 
@@ -25,7 +25,7 @@ O Kubernetes no Modo Difícil irá guiá-lo para colocar no ar um cluster Kubern
 
 Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platform](https://cloud.google.com). Ainda que o GCP é utilizado para requisitos básicos de infraestrutura, as lições aprendidas nesse tutorial podem ser aplicadas a outras plataformas.
 
-* [Pré-requisitos](docs/01-prerequisites.md)
+* [Pré-requisitos](docs/01-pre-requisitos.md)
 * [Instalando as Ferramentas Cliente](docs/02-client-tools.md)
 * [Provisionando Recursos Computacionais](docs/03-compute-resources.md)
 * [Provisionando a CA e Gerando Certificados TLS](docs/04-certificate-authority.md)
