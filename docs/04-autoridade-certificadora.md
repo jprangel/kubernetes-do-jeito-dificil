@@ -112,7 +112,7 @@ admin.pem
 
 ### Os Certificados de Cliente do Kubelet
 
-Kubernetes utiliza um [modo de autorização de "propósito especial"] (https://kubernetes.io/docs/admin/authorization/node/) chamado _Node Authorizer_ (Autorizador de Nó), que autoriza especificamente requisições de API feitas pelo [Kubelets](https://kubernetes.io/docs/concepts/overview/components/#kubelet). Para ser autorizado pelo Autorizador de Nó, os Kubelets deve utilizar uma credencial que os identifiquem como parte do grupo `system:nodes`, com um usuário parte de `system:node:<nomeDoNó>`. Nessa seção você irá criar um certificado para cada _worker_ do Kubernetes que atende aos requisitos do Autorizador de Nós.
+Kubernetes utiliza um [modo de autorização de "propósito especial"] (https://kubernetes.io/docs/admin/authorization/node/) chamado _Node Authorizer_ (Autorizador de Nó), que autoriza especificamente requisições de API feitas pelos [Kubelets](https://kubernetes.io/docs/concepts/overview/components/#kubelet). Para serem autorizados pelo Autorizador de Nó, os Kubelets devem utilizar uma credencial que os identifiquem como parte do grupo `system:nodes`, com um usuário parte de `system:node:<nomeDoNó>`. Nessa seção você irá criar um certificado para cada _worker_ do Kubernetes que atenda aos requisitos do Autorizador de Nós.
 
 Gere um certificado e uma chave privada para cada nó _worker_ do Kubernetes:
 
@@ -147,7 +147,7 @@ cfssl gencert \
   -ca=ca.pem \
   -ca-key=ca-key.pem \
   -config=ca-config.json \
-  -hostname=${instance},${EXTERNAL_IP},${INTERNAL_IP} \
+  -hostname=${instance},${IP_EXTERNO},${IP_INTERNO} \
   -profile=kubernetes \
   ${instance}-csr.json | cfssljson -bare ${instance}
 done
