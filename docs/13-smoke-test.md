@@ -4,7 +4,7 @@ Nesse lab você irá completar uma série de tarefas para garantir que seu clust
 
 ## Encriptação de Dados
 
-Nessa seção você irá verificar a habilidade de [encriptar dados secretos em repouso](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#verifying-that-data-is-encrypted).
+Nessa seção você irá verificar a habilidade de [encriptar dados de _secret_ em repouso](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#verifying-that-data-is-encrypted).
 
 Crie um _secret_ (segredo) genérico:
 
@@ -74,13 +74,13 @@ Nessa seção você irá verificar a habilidade de acessar aplicações remotame
 Recupere o nome completo do pod `nginx`:
 
 ```
-POD_NAME=$(kubectl get pods -l run=nginx -o jsonpath="{.items[0].metadata.name}")
+NOME_DO_POD=$(kubectl get pods -l run=nginx -o jsonpath="{.items[0].metadata.name}")
 ```
 
 Encaminhe a porta `8080` na sua máquina local para a porta `80` do pod do `nginx`:
 
 ```
-kubectl port-forward $POD_NAME 8080:80
+kubectl port-forward $NOME_DO_POD 8080:80
 ```
 
 > saída
@@ -121,12 +121,12 @@ Handling connection for 8080
 
 ### Logs
 
-Nessa seção você irá verificar a abilitade de [recuperar logs de contêineres](https://kubernetes.io/docs/concepts/cluster-administration/logging/).
+Nessa seção você irá verificar a habilidade de [recuperar logs de contêineres](https://kubernetes.io/docs/concepts/cluster-administration/logging/).
 
 Imprima os logs do pod `nginx`:
 
 ```
-kubectl logs $POD_NAME
+kubectl logs $NOME_DO_POD
 ```
 
 > saída
@@ -142,7 +142,7 @@ Nessa seção você irá verificar a habilidade de [executar comandos em um cont
 Imprima a versão do nginx executando o comando `nginx -v` no contêiner `nginx`:
 
 ```
-kubectl exec -ti $POD_NAME -- nginx -v
+kubectl exec -ti $NOME_DO_POD -- nginx -v
 ```
 
 > saída
@@ -161,12 +161,12 @@ Exponha a implantação `nginx` utilizando um serviço de [NodePort (Porta de N�
 kubectl expose deployment nginx --port 80 --type NodePort
 ```
 
-> O tipo de serviço Balanceador de Carga não pode ser utilizado porque seu cluster não está configurado com [integração de provedor de nuvem](https://kubernetes.io/docs/getting-started-guides/scratch/#cloud-provider). Configurar uma integração de provedor de nuvem está fora do escopo desse tutorial.
+> O tipo de serviço "Balanceador de Carga não pode ser utilizado porque seu cluster não está configurado com [integração de provedor de nuvem](https://kubernetes.io/docs/getting-started-guides/scratch/#cloud-provider). Configurar uma integração de provedor de nuvem está fora do escopo desse tutorial.
 
 Recupere a porta do nó atribuída ao serviço do `nginx`:
 
 ```
-NODE_PORT=$(kubectl get svc nginx \
+PORTA_DO_NO=$(kubectl get svc nginx \
   --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 ```
 
@@ -174,21 +174,21 @@ Crie uma regra de firewall que permita acesso remoto à porta de nó do `nginx`:
 
 ```
 gcloud compute firewall-rules create kubernetes-the-hard-way-allow-nginx-service \
-  --allow=tcp:${NODE_PORT} \
+  --allow=tcp:${PORTA_DO_NO} \
   --network kubernetes-the-hard-way
 ```
 
 Recupere o endereço de IP externo de uma instância _worker_:
 
 ```
-EXTERNAL_IP=$(gcloud compute instances describe worker-0 \
+IP_EXTERNO=$(gcloud compute instances describe worker-0 \
   --format 'value(networkInterfaces[0].accessConfigs[0].natIP)')
 ```
 
 Faça uma requisição HTTP utilizando o endereço de IP externo e a porta de nó do `nginx`:
 
 ```
-curl -I http://${EXTERNAL_IP}:${NODE_PORT}
+curl -I http://${IP_EXTERNO}:${PORTA_DO_NO}
 ```
 
 > saída
