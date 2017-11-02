@@ -2,14 +2,14 @@
 
 O Kubernetes armazena uma variedade de dados incluindo estado do cluster, configurações de aplicação e segredos. O Kubernetes suporta a habilidade de [encriptar](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data) dados em repouso no cluster.
 
-Nesse lab você irá criar uma chave de encriptação e uma [configuração de encriptação](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#understanding-the-encryption-at-rest-configuration) adequada para encriptar Segredos do Kubernetes. 
+Nesse lab você irá criar uma chave de encriptação e uma [configuração de encriptação](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#understanding-the-encryption-at-rest-configuration) adequada para encriptar segredos do Kubernetes. 
 
 ## A chave de Encriptação
 
 Crie uma chave de encriptação:
 
 ```
-ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
+CHAVE_ENCRIPTACAO=$(head -c 32 /dev/urandom | base64)
 ```
 
 ## O Arquivo de Configuração de Encriptação
@@ -27,7 +27,7 @@ resources:
       - aescbc:
           keys:
             - name: key1
-              secret: ${ENCRYPTION_KEY}
+              secret: ${CHAVE_ENCRIPTACAO}
       - identity: {}
 EOF
 ```
