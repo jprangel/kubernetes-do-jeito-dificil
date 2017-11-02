@@ -6,12 +6,12 @@ Nesse lab vorê irá gerar um arquivo kubeconfig para o utilitário de linha de 
 
 ## O Arquivo de Configuração Admin do Kubernetes
 
-Cada kubeconfig requer um Servidor de API do Kubernetes para se conectar. Para suportar alta disponibilidade, o endereço de IP atribuído ao balanceador de carga externo fazendo face aos Servidores de API do Kubernetes será utilizado.
+Cada kubeconfig requer um Servidor de API do Kubernetes para se conectar. Para suportar alta disponibilidade, o endereço de IP atribuído ao balanceador de carga externo fazendo frente aos Servidores de API do Kubernetes será utilizado.
 
 Recupere o endereço de IP estático do `kubernetes-the-hard-way`:
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
+ENDERECO_PUBLICO_KUBERNETES=$(gcloud compute addresses describe kubernetes-the-hard-way \
   --region $(gcloud config get-value compute/region) \
   --format 'value(address)')
 ```
@@ -22,7 +22,7 @@ Crie um arquivo kubeconfig apto para autenticar como o usuário `admin`:
 kubectl config set-cluster kubernetes-the-hard-way \
   --certificate-authority=ca.pem \
   --embed-certs=true \
-  --server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443
+  --server=https://${ENDERECO_PUBLICO_KUBERNETES}:6443
 ```
 
 ```
