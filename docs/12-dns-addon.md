@@ -1,0 +1,79 @@
+# Implantando o Add-on de DNS do Cluster
+
+Nesse lab você irá implantar o [Add-on de DNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) que provê descoberta de serviços baseadas em DNS para aplicações executando dentro do cluster do Kubernetes.
+
+## O Add-on de DNS do Cluster
+
+Implante o add-on de cluster `kube-dns`:
+
+```
+kubectl create -f https://storage.googleapis.com/kubernetes-the-hard-way/kube-dns.yaml
+```
+
+> saída
+
+```
+serviceaccount "kube-dns" created
+configmap "kube-dns" created
+service "kube-dns" created
+deployment "kube-dns" created
+```
+
+Liste os pods criados pela implantação `kube-dns`:
+
+```
+kubectl get pods -l k8s-app=kube-dns -n kube-system
+```
+
+> saída
+
+```
+NAME                        READY     STATUS    RESTARTS   AGE
+kube-dns-3097350089-gq015   3/3       Running   0          20s
+kube-dns-3097350089-q64qc   3/3       Running   0          20s
+```
+
+## Verificação
+
+Crie uma implantação `busybox`
+
+```
+kubectl run busybox --image=busybox --command -- sleep 3600
+```
+
+Liste o pod criado pela implantação `busybox`:
+
+```
+kubectl get pods -l run=busybox
+```
+
+> saída
+
+```
+NAME                       READY     STATUS    RESTARTS   AGE
+busybox-2125412808-mt2vb   1/1       Running   0          15s
+```
+
+Recupere o nome completo do pod `busybox`:
+
+```
+POD_NAME=$(kubectl get pods -l run=busybox -o jsonpath="{.items[0].metadata.name}")
+```
+
+Execute uma busca de DNS pelo serviço `kubernetes`  dentro do pod `busybox`:
+
+```
+kubectl exec -ti $POD_NAME -- nslookup kubernetes
+```
+
+> saída
+
+```
+Server:    10.32.0.10
+Address 1: 10.32.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      kubernetes
+Address 1: 10.32.0.1 kubernetes.default.svc.cluster.local
+```
+
+Próximo: [Smoke Test (Teste de Fumaça)](13-smoke-test.md)
