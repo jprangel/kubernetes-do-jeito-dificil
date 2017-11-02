@@ -1,6 +1,6 @@
 # Provisionando Rotas de Rede do Pod
 
-Pods agendados para um nó recebem um endereço de IP da faixa de CIDR do Nó do Pod em questão. A essa altura, Pods não podem se comunicar com outros Pods em execução em nós diferentes devido a [routes](https://cloud.google.com/compute/docs/vpc/routes) de rede faltantes.
+Pods agendados para um nó recebem um endereço de IP da faixa de CIDR do Nó do Pod em questão. A essa altura, Pods não podem se comunicar com outros Pods em execução em nós diferentes devido a [rotas](https://cloud.google.com/compute/docs/vpc/routes) de rede faltantes.
 
 Nesse lab você irá criar uma rota para cada nó _worker_ que mapeia a faixa CIDR do nó do Pod para o endereço de IP interno do nó.
 
@@ -8,7 +8,7 @@ Nesse lab você irá criar uma rota para cada nó _worker_ que mapeia a faixa CI
 
 ## A Tabela de Roteamento
 
-Nessa seção você coletará a informação necessária para criar rotas na rede VPC `kubernetes-the-hard-way`.
+Nessa seção você irá coletar a informação necessária para criar rotas na rede VPC `kubernetes-the-hard-way`.
 
 Imprima o endereço de IP interno e a faixa de CIDR do Pod para cada instância _worker_:
 
