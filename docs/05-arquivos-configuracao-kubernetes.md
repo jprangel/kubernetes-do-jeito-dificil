@@ -15,14 +15,14 @@ Cada kubeconfig requer um Servidor de API do Kubernetes para se conectar. Para s
 Recupere o endereço de IP estático do `kubernetes-the-hard-way`:
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
+ENDERECO_PUBLICO_KUBERNETES=$(gcloud compute addresses describe kubernetes-the-hard-way \
   --region $(gcloud config get-value compute/region) \
   --format 'value(address)')
 ```
 
 ### O Arquivo kubelet de Configuração do Kubernetes
 
-Ao criar os arquivos kubeconfig o certificado de cliente que bate com o nome do nó do Kubelet deve ser utilizado. Isso irá garantir que os Kubelets serão devidamente autorizados pelo [Autorizador de Nós](https://kubernetes.io/docs/admin/authorization/node/) do Kubernetes.
+Ao criar os arquivos kubeconfig, o certificado de cliente que corresponde com o nome do nó do Kubelet deve ser utilizado. Isso irá garantir que os Kubelets serão devidamente autorizados pelo [Autorizador de Nós](https://kubernetes.io/docs/admin/authorization/node/) do Kubernetes.
 
 Crie um arquivo kubeconfig para cada nó _worker_:
 
@@ -31,7 +31,7 @@ for instance in worker-0 worker-1 worker-2; do
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.pem \
     --embed-certs=true \
-    --server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443 \
+    --server=https://${ENDERECO_PUBLICO_KUBERNETES}:6443 \
     --kubeconfig=${instance}.kubeconfig
 
   kubectl config set-credentials system:node:${instance} \
