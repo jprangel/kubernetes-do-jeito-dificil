@@ -1,6 +1,6 @@
 # Subindo o Plano de Controle do Kubernetes
 
-Nesse lab você subirá o Plano de Controle do Kubernetes em três instâncias computacionais e configurá-las para alta disponibilidade. Você também irá criar um balanceador de carga que expõe os Servidores de API do Kubernetes para clientes remotos. Os seguintes componentes serão instalados em cada nó: Servidor de API do Kubernetes, Agendador e Gerenciador de Controladora.
+Nesse lab você irá subir o Plano de Controle do Kubernetes em três instâncias computacionais e configurar as mesmas para alta disponibilidade. Você também vai criar um balanceador de carga que expõe os Servidores de API do Kubernetes para clientes remotos. Os seguintes componentes serão instalados em cada nó: Servidor de API do Kubernetes, Agendador e Gerenciador de Controladora.
 
 ## Pré-requisitos
 
@@ -193,7 +193,7 @@ etcd-1               Healthy   {"health": "true"}
 
 ## RBAC para Autorização do Kubelet
 
-Nessa seção você irá configurar as permissões RBAC para permitir que o Servidor de API do Kubernetes acesse a API do Kubelet em cada nó _worker_. Acesso à API do Kubelet é necessário para recuperar métricas, logs e executar comandos em pods.
+Nessa seção você irá configurar as permissões RBAC para permitir que o Servidor de API do Kubernetes acesse a API do Kubelet em cada nó _worker_. O acesso à API do Kubelet é necessário para recuperar métricas, logs e executar comandos em pods.
 
 > Esse tutorial define a flag `--authorization-mode` do Kubelet para `Webhook`. O modo Webhook utiliza a API [SubjectAccessReview](https://kubernetes.io/docs/admin/authorization/#checking-api-access) para determinar autorização.
 
@@ -254,7 +254,7 @@ EOF
 
 Nessa seção você provisionará um balanceador de carga externo para fazer frente ao Servidor de API do Kubernetes. O endereço de IP estático do `kubernetes-the-hard-way` será anexado a esse balanceador de carga.
 
-> As instâncias computacionais criadas nesse tutorial não terão permissão para completar essa seção. Execute os seguintes comandos da mesma máquina utilizada para criar as instâncias computacionais
+> As instâncias computacionais criadas nesse tutorial não terão permissão para completar essa seção. Execute os seguintes comandos da mesma máquina utilizada para criar as instâncias computacionais.
 
 Crie os recursos de rede do balanceador de carga externo:
 
@@ -268,14 +268,14 @@ gcloud compute target-pools add-instances kubernetes-target-pool \
 ```
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
+ENDERECO_PUBLICO_KUBERNETES=$(gcloud compute addresses describe kubernetes-the-hard-way \
   --region $(gcloud config get-value compute/region) \
   --format 'value(name)')
 ```
 
 ```
 gcloud compute forwarding-rules create kubernetes-forwarding-rule \
-  --address ${KUBERNETES_PUBLIC_ADDRESS} \
+  --address ${ENDERECO_PUBLICO_KUBERNETES} \
   --ports 6443 \
   --region $(gcloud config get-value compute/region) \
   --target-pool kubernetes-target-pool
@@ -286,7 +286,7 @@ gcloud compute forwarding-rules create kubernetes-forwarding-rule \
 Recupere o endereço estático de IP do `kubernetes-the-hard-way`:
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
+ENDERECO_PUBLICO_KUBERNETES=$(gcloud compute addresses describe kubernetes-the-hard-way \
   --region $(gcloud config get-value compute/region) \
   --format 'value(address)')
 ```
@@ -294,7 +294,7 @@ KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-har
 Faça uma requisição HTTP para conseguir as informações de versão do Kubernetes:
 
 ```
-curl --cacert ca.pem https://${KUBERNETES_PUBLIC_ADDRESS}:6443/version
+curl --cacert ca.pem https://${ENDERECO_PUBLICO_KUBERNETES}:6443/version
 ```
 
 > saída
