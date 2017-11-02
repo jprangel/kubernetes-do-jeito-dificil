@@ -1,6 +1,6 @@
 # Subindo o Cluster etcd
 
-Componentes do Kubernetes são _stateless_ (não mantém estado) e armazenam o estado do cluster no [etcd](https://github.com/coreos/etcd). Nesse lab você irá subir um cluster de etcd com três nós e configurá-lo para alta disponibilidade e acesso remoto seguro.
+Componentes do Kubernetes são _stateless_ (não mantém estado), mas armazenam o estado do cluster no [etcd](https://github.com/coreos/etcd). Nesse lab você irá subir um cluster de etcd com três nós e configurá-lo para alta disponibilidade e acesso remoto seguro.
 
 ## Pré-requisitos
 
@@ -44,14 +44,14 @@ sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
 O IP interno da instância será utilizado para servir requisições de cliente e comunicar com cada um dos pares do cluster etcd. Recupere o endereço de IP interno para a instância computacional em uso:
 
 ```
-INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
+IP_INTERNO=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
 ```
 
 Cada membro etcd deve ter um nome único dentro de um cluster etcd. Configure o nome do etcd para bater com o _hostname_ a instância computacional corrente: 
 
 ```
-ETCD_NAME=$(hostname -s)
+NOME_ETCD=$(hostname -s)
 ```
 
 Crie o arquivo _unit_ `etcd.service` do systemd:
@@ -64,7 +64,7 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStart=/usr/local/bin/etcd \\
-  --name ${ETCD_NAME} \\
+  --name ${NOME_ETCD} \\
   --cert-file=/etc/etcd/kubernetes.pem \\
   --key-file=/etc/etcd/kubernetes-key.pem \\
   --peer-cert-file=/etc/etcd/kubernetes.pem \\
@@ -73,10 +73,10 @@ ExecStart=/usr/local/bin/etcd \\
   --peer-trusted-ca-file=/etc/etcd/ca.pem \\
   --peer-client-cert-auth \\
   --client-cert-auth \\
-  --initial-advertise-peer-urls https://${INTERNAL_IP}:2380 \\
-  --listen-peer-urls https://${INTERNAL_IP}:2380 \\
-  --listen-client-urls https://${INTERNAL_IP}:2379,http://127.0.0.1:2379 \\
-  --advertise-client-urls https://${INTERNAL_IP}:2379 \\
+  --initial-advertise-peer-urls https://${IP_INTERNO}:2380 \\
+  --listen-peer-urls https://${IP_INTERNO}:2380 \\
+  --listen-client-urls https://${IP_INTERNO}:2379,http://127.0.0.1:2379 \\
+  --advertise-client-urls https://${IP_INTERNO}:2379 \\
   --initial-cluster-token etcd-cluster-0 \\
   --initial-cluster controller-0=https://10.240.0.10:2380,controller-1=https://10.240.0.11:2380,controller-2=https://10.240.0.12:2380 \\
   --initial-cluster-state new \\
