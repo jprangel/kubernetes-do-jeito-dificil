@@ -14,7 +14,7 @@ Esse tutorial explora o [Google Cloud Platform](https://cloud.google.com/) simpl
 
 Siga a [documentação](https://cloud.google.com/sdk/)(em Inglês) do SDK do Google Cloud para instalar e configurar o utilitário de linha de comando `gcloud`.
 
-Verifique que a versão do SDK do Google Cloud é 173.0.0 ou superior:
+Verifique que a versão do SDK do Google Cloud é 200.0.0 ou superior:
 
 ```
 gcloud version
@@ -43,5 +43,15 @@ gcloud config set compute/zone us-west1-c
 ```
 
 > Utilize o comando `gcloud compute zones list` para visualizar regiões e zonas adicionais.
+
+## Executando comandos em paralelo com o tmux
+
+[tmux](https://github.com/tmux/tmux/wiki) pode ser utilizado para executar comandos em várias instâncias computacionais ao mesmo tempo. Os laboratórios nesse tutorial podem requerir que os mesmos comandos sejam executados em várias instâncias, nesses casos considere utilizar o tmux e dividir uma janela em vários painéis via `sinchronize-panes` , para acelerar o processo de provisionamento.
+
+> A utlização do tmux é opcional e não é necessária para concluir esse tutorial.
+
+![screenshot do tmux ](imagens/tmux-screenshot.png)
+
+> Habilite o `synchronize-panes`: `ctrl+b` e `shift :`. Então digite `set synchronize-panes on` no prompt. Para desabilitar a sincronização: `set synchronize-panes off`.
 
 Próximo: [Instalando as Ferramentas Cliente](02-ferramentas-cliente.md)
