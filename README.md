@@ -16,10 +16,11 @@ O público alvo para esse tutorial é alguém planejando suportar um cluster de 
 
 O Kubernetes do Jeito Difícil irá guiá-lo para colocar no ar um cluster Kubernetes de alta disponibilidade com encriptação fim-a-fim entre componentes e autenticação RBAC.
 
-* [Kubernetes](https://github.com/kubernetes/kubernetes) 1.8.0
-* [cri-containerd Container Runtime](https://github.com/kubernetes-incubator/cri-containerd) 1.0.0-alpha.0
+* [Kubernetes](https://github.com/kubernetes/kubernetes) 1.10.2
+* [containerd Container Runtime](https://github.com/kubernetes-incubator/cri-containerd) 1.1.0
+* [gVisor](https://github.com/google/gvisor) 08879266fef3a67fac1a77f1ea133c3ac75759dd
 * [CNI Container Networking](https://github.com/containernetworking/cni) 0.6.0
-* [etcd](https://github.com/coreos/etcd) 3.2.8
+* [etcd](https://github.com/coreos/etcd) 3.3.5
 
 ## Laboratórios
 
