@@ -1,5 +1,7 @@
 **ATENÇÃO**: Essa é uma tradução livre, sem fins lucrativos, buscando apenas facilitar o acesso a material em Português sobre o Kubernetes diretamente de quem realmente entende do assunto, nada menos que **Kelsey Hightower**.
 
+** Atualizado em 08/06/2018 **
+
 # Kubernetes do Jeito Difícil
 
 Esse tutorial irá acompanhá-lo na configuração do Kubernetes do Jeito Difícil. Esse guia não é para pessoas buscando um comando totalmente automatizado para colocar no ar um cluster de Kubernetes. Se você é um desses então confira [Google Container Engine](https://cloud.google.com/container-engine), ou então [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/) (em Inglês).
