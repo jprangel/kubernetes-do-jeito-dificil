@@ -17,7 +17,7 @@ Nessa seção uma rede de [Nuvem Privada Virtual (VPC)](https://cloud.google.com
 Crie a rede VPC customizada `kubernetes-the-hard-way`:
 
 ```
-gcloud compute networks create kubernetes-the-hard-way --mode custom
+gcloud compute networks create kubernetes-the-hard-way --subnet-mode custom
 ```
 
 
