@@ -3,8 +3,8 @@
 ** Status em: 18/06/2018 **
 ** Previsão de conclusão: 23/06/2018 **
 
-Sessões revisadas: README, 01, 02, 03 e 12.
-Sessões pendentes: 04, 05, 06, 07, 08, 09, 10, 11, 13 e 14.
+__Sessões revisadas__: README, 01, 02, 03, 12, 14
+__Sessões pendentes__: 04, 05, 06, 07, 08, 09, 10, 11, 13
 
 # Kubernetes do Jeito Difícil
 
