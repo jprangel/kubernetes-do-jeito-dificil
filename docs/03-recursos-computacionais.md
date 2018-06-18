@@ -94,7 +94,7 @@ kubernetes-the-hard-way  us-west1  XX.XXX.XXX.XX  RESERVED
 
 ## Instâncias Computacionais
 
-As instâncias computacionais nesse lab serão provisionadas utilizando o [Ubuntu Server](https://www.ubuntu.com/server) 16.04, que tem um bom suporte para o [_runtime_ de contêiner cri-containerd](https://github.com/kubernetes-incubator/cri-containerd). Cada instância computacional será provisionada com um endereço de IP fixo para simplificar o processo de colocar no ar o Kubernetes.
+As instâncias computacionais nesse lab serão provisionadas utilizando o [Ubuntu Server](https://www.ubuntu.com/server) 18.04, que tem um bom suporte para o [_runtime_ de contêiner cri-containerd](https://github.com/containerd/containerd). Cada instância computacional será provisionada com um endereço de IP fixo para simplificar o processo de colocar no ar o Kubernetes.
 
 ### Controladores do Kubernetes
 
@@ -106,7 +106,7 @@ for i in 0 1 2; do
     --async \
     --boot-disk-size 200GB \
     --can-ip-forward \
-    --image-family ubuntu-1604-lts \
+    --image-family ubuntu-1804-lts \
     --image-project ubuntu-os-cloud \
     --machine-type n1-standard-1 \
     --private-network-ip 10.240.0.1${i} \
@@ -130,7 +130,7 @@ for i in 0 1 2; do
     --async \
     --boot-disk-size 200GB \
     --can-ip-forward \
-    --image-family ubuntu-1604-lts \
+    --image-family ubuntu-1804-lts \
     --image-project ubuntu-os-cloud \
     --machine-type n1-standard-1 \
     --metadata pod-cidr=10.200.${i}.0/24 \
@@ -159,6 +159,74 @@ controller-2  us-west1-c  n1-standard-1               10.240.0.12  XX.XXX.XXX.XX
 worker-0      us-west1-c  n1-standard-1               10.240.0.20  XXX.XXX.XXX.XX  RUNNING
 worker-1      us-west1-c  n1-standard-1               10.240.0.21  XX.XXX.XX.XXX   RUNNING
 worker-2      us-west1-c  n1-standard-1               10.240.0.22  XXX.XXX.XX.XX   RUNNING
+```
+
+## Configurando o acesso SSH
+
+SSH será utilizado para configurar o controlador e as instâncias _worker_. Ao conectar nas instâncias computacionais pela primeira vez, chaves SSH serão geradas para você e armazenadas nos metadados do projeto ou das instâncias como descrito na documentação em [connecting to instances ('conectando nas instâncias')](https://cloud.google.com/compute/docs/instances/connecting-to-instance)
+
+Teste o acesso SSH na instância computacional `controller-0`:
+
+```
+gcloud compute ssh controller-0
+```
+
+Se essa é sua primeira vez conectando-se em uma instância computacional, chaves SSH serão geradas. Insira uma _passphrase_ no _prompt_ para continuar (ou tecle ENTER como no exemplo para inserir uma _passphrase_ vazia):
+
+```
+WARNING: The public SSH key file for gcloud does not exist.
+WARNING: The private SSH key file for gcloud does not exist.
+WARNING: You do not have an SSH key for gcloud.
+WARNING: SSH keygen will be executed to generate a key.
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+```
+
+Nesse ponto, a chave SSH gerada será transmitida e armazenada em seu projeto:
+
+```
+Your identification has been saved in /home/$USER/.ssh/google_compute_engine.
+Your public key has been saved in /home/$USER/.ssh/google_compute_engine.pub.
+The key fingerprint is:
+SHA256:nz1i8jHmgQuGt+WscqP5SeIaSy5wyIJeL71MuV+QruE $USER@$HOSTNAME
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|                 |
+|                 |
+|        .        |
+|o.     oS        |
+|=... .o .o o     |
+|+.+ =+=.+.X o    |
+|.+ ==O*B.B = .   |
+| .+.=EB++ o      |
++----[SHA256]-----+
+Updating project ssh metadata...-Updated [https://www.googleapis.com/compute/v1/projects/$PROJECT_ID].
+Updating project ssh metadata...done.
+Waiting for SSH key to propagate.
+```
+
+Após a chave SSH ser atualizada, você será autenticado na instância computacional  `controller-0`:
+
+```
+Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-1006-gcp x86_64)
+
+...
+
+Last login: Sun May 13 14:34:27 2018 from XX.XXX.XXX.XX
+```
+
+Digite `exit` no _prompt_ para sair da instância computacional `controller-0`:
+
+```
+$USER@controller-0:~$ exit
+```
+> saída
+
+```
+logout
+Connection to XX.XXX.XXX.XXX closed
 ```
 
 Próximo: [Provisionando a CA e Gerando Certificados TLS](04-autoridade-certificadora.md)
