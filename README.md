@@ -1,11 +1,3 @@
-**ATENÇÃO**: Essa é uma tradução livre, sem fins lucrativos, buscando apenas facilitar o acesso a material em Português sobre o Kubernetes diretamente de quem realmente entende do assunto, nada menos que **Kelsey Hightower**.
-
-** Status em: 18/06/2018 **
-** Previsão de conclusão: 23/06/2018 **
-
-__Sessões revisadas__: README, 01, 02, 03, 06, 12, 14
-__Sessões pendentes__: 04, 05, 07, 08, 09, 10, 11, 13
-
 # Kubernetes do Jeito Difícil
 
 Esse tutorial irá acompanhá-lo na configuração do Kubernetes do Jeito Difícil. Esse guia não é para pessoas buscando um comando totalmente automatizado para colocar no ar um cluster de Kubernetes. Se você é um desses então confira [Google Container Engine](https://cloud.google.com/container-engine), ou então [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/) (em Inglês).
@@ -46,3 +38,5 @@ Esse tutorial parte do princípio que você tenha acesso ao [Google Cloud Platfo
 * [Implantando o Add-on de DNS do Cluster](docs/12-dns-addon.md)
 * [Smoke Test (Teste de Fumaça)](docs/13-smoke-test.md)
 * [Limpeza](docs/14-limpeza.md)
+* [Dashboard](docs/15-dashboard.md)
+
