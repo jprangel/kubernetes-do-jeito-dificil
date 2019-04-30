@@ -7,7 +7,9 @@ https://github.com/kubernetes/dashboard
 
 1. Deploy dashboard
 
-```kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml```
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+```
 
 2. Create a user to access the dashboard `usr-admin`
 
